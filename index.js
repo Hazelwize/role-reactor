@@ -1,12 +1,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const {Client, Collection, GatewayIntentBits} = require('discord.js');
+const {Client, Collection, GatewayIntentBits, GuildMembers, PermissionFlagsBits} = require('discord.js');
 
-require('dotenv').config({path: './config/.env'})
+require('dotenv').config({path:'./config/.env'})
 
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds]})
-
+const client = new Client({intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers], permissions:[PermissionFlagsBits.ManageRoles]})
 
 client.commands = new Collection()
 
@@ -39,7 +38,8 @@ for (const file of eventFiles) {
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
-}
+};
 
-client.login(process.env.BOT_TOKEN)
+
+client.login(process.env.BOT_TOKEN);
 
